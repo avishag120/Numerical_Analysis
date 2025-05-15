@@ -17,7 +17,7 @@ def newton_raphson(f, df, p0, tol, max_iter=50):
     print("{:<10} {:<15} {:<15}".format("Iteration", "p0", "p1"))
     for i in range(max_iter):
         df_p0 = df(p0)
-        if (abs(df_p0 - 0) <= ):
+        if (abs(df_p0 - 0) <= tol):
             print("Derivative is zero at p0, method cannot continue.")
             return None
 
