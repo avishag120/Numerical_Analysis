@@ -1,6 +1,16 @@
-import numpy as np
 from colors import bcolors
 
+def custom_isclose(a, b, rel_tol=1e-05, abs_tol=1e-08):
+    """
+    Custom implementation of np.isclose.
+
+    :param a: First value to compare
+    :param b: Second value to compare
+    :param rel_tol: Relative tolerance
+    :param abs_tol: Absolute tolerance
+    :return: True if a and b are close, False otherwise
+    """
+    return abs(a - b) <= (abs_tol + rel_tol * abs(b))
 
 def newton_raphson(f, df, p0, tol, max_iter=50):
     """
@@ -17,7 +27,7 @@ def newton_raphson(f, df, p0, tol, max_iter=50):
     print("{:<10} {:<15} {:<15}".format("Iteration", "p0", "p1"))
     for i in range(max_iter):
         df_p0 = df(p0)
-        if (abs(df_p0 - 0) <= tol):
+        if custom_isclose(df_p0, 0):
             print("Derivative is zero at p0, method cannot continue.")
             return None
 
@@ -37,7 +47,7 @@ def newton_raphson(f, df, p0, tol, max_iter=50):
 if __name__ == '__main__':
     f = lambda x: x**2
     df = lambda x: 2*x
-    p0 = 0
+    p0 = 2
     tol = 1e-6
     max_iter = 100
 
