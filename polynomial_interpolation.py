@@ -1,7 +1,7 @@
 from colors import bcolors
 from matrix_utility import *
 from GaussAndJacobi import gauss_seidel
-
+import matplotlib.pyplot as plt
 
 def polynomialInterpolation(table_points, x):
     matrix = [[point[0] ** i for i in range(len(table_points))] for point in table_points]  # Create the Vandermonde matrix
@@ -20,6 +20,20 @@ def polynomialInterpolation(table_points, x):
     print('P(X) = ' + ' + '.join([f'({matrixSol[i]}) * x^{i}' for i in range(len(matrixSol))]))
     print(bcolors.OKGREEN, f"\nThe Result of P(X={x}) is:", bcolors.ENDC)
     print(result)
+
+    # Plotting the graph
+    x_vals = np.linspace(min([p[0] for p in table_points]) - 1, max([p[0] for p in table_points]) + 1, 500)
+    y_vals = [sum([matrixSol[i] * (xi ** i) for i in range(len(matrixSol))]) for xi in x_vals]
+
+    plt.scatter([p[0] for p in table_points], [p[1] for p in table_points], color='red', label='Data Points')
+    plt.plot(x_vals, y_vals, label='Interpolated Polynomial', color='blue')
+    plt.axvline(x=x, color='green', linestyle='--', label=f'X={x}')
+    plt.title('Polynomial Interpolation')
+    plt.xlabel('X')
+    plt.ylabel('P(X)')
+    plt.legend()
+    plt.grid()
+    plt.show()
     return result
 
 
