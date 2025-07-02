@@ -42,7 +42,9 @@ def bisection_method(f, a, b, tol=1e-6, verbose=True):
 
         k += 1
 
-    if k == steps:
+    # Print final interval and midpoint before raising the error
+    if abs(b - a) > tol:
+        print(f"Final interval: [{a}, {b}], midpoint: {c}, f(c): {f_c}")
         raise RuntimeError("Maximum number of iterations reached without convergence.")
 
     return c
