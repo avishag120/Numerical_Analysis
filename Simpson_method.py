@@ -3,6 +3,21 @@ import math
 from typing import Callable
 
 def simpsons_rule(f: Callable[[float], float], a: float, b: float, n: int) -> float:
+    """
+    Compute the integral of a function using Simpson's Rule.
+    Simpson's Rule is a method for numerical integration that approximates the integral of a function
+    by dividing the interval into an even number of subintervals and applying a weighted average of function values
+    at the endpoints and midpoints of these subintervals.
+    Args:
+        f: Callable[[float], float]: The function to integrate.
+        a: float: The start point of the interval.
+        b: float: The end point of the interval.
+        n: int: Number of subintervals (must be a positive even integer).
+
+    Returns:
+        float: Approximate integral of `f` from `a` to `b`.
+
+    """
     if n <= 0:
         raise ValueError("Number of subintervals (n) must be greater than 0.")
     if n % 2 != 0:
@@ -17,6 +32,22 @@ def simpsons_rule(f: Callable[[float], float], a: float, b: float, n: int) -> fl
     return integral * h / 3
 
 def error_bound_exact_sympy(f_sym, a: float, b: float, n: int) -> float:
+    """
+    Calculate the error bound for the Simpson's Rule approximation using SymPy.
+    This function computes the fourth derivative of the given function symbolically,
+    evaluates its absolute value at sample points within the interval [a, b],
+    and uses the maximum value to estimate the error bound.
+
+    Args:
+        f_sym: sympy expression: The symbolic representation of the function to integrate.
+        a: float: The start point of the interval.
+        b: float: The end point of the interval.
+        n: int: Number of subintervals (must be a positive even integer).
+
+    Returns:
+        float: Estimated error bound of the Simpson's Rule approximation.
+
+    """
     x = sp.Symbol('x', real=True)  # Important for avoiding re(x)/im(x)
     f4_sym = sp.diff(f_sym, x, 4)
     f4_abs = sp.lambdify(x, sp.Abs(f4_sym), modules=["numpy"])  # More robust

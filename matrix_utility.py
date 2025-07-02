@@ -1,6 +1,14 @@
 import numpy as np
 
 def print_matrix(matrix):
+    """
+    Function for printing a matrix in a readable format
+    Args:
+        matrix: Matrix nxn
+
+    Returns: None
+
+    """
     for row in matrix:
         for element in row:
             print(element, end=" ")  # Print each element in the row
@@ -28,6 +36,16 @@ def MaxNorm(matrix):
 
 #  swapping between row i to row j in the matrix
 def swap_row(mat, i, j):
+    """
+    Function for swapping between row i to row j in the matrix
+    Args:
+        mat: Matrix nxn
+        i: Row index i to swap
+        j: Row index j to swap
+
+    Returns: None
+
+    """
     N = len(mat)
     for k in range(N + 1):
         temp = mat[i][k]
@@ -36,6 +54,14 @@ def swap_row(mat, i, j):
 
 
 def is_diagonally_dominant(mat):
+    """
+    Function to check if a matrix is diagonally dominant.
+    Args:
+        mat: Matrix nxn
+
+    Returns: True if the matrix is diagonally dominant, False otherwise.
+
+    """
     if mat is None:
         return False
 
@@ -45,6 +71,14 @@ def is_diagonally_dominant(mat):
 
 
 def is_square_matrix(mat):
+    """
+    Function to check if a matrix is square.
+    Args:
+        mat: Matrix nxn
+
+    Returns: True if the matrix is square, False otherwise.
+
+    """
     if mat is None:
         return False
 
@@ -56,6 +90,14 @@ def is_square_matrix(mat):
 
 
 def reorder_dominant_diagonal(matrix):
+    """
+    Function to reorder a matrix so that the diagonal elements are dominant.
+    Args:
+        matrix: Matrix nxn
+
+    Returns: Reordered matrix with dominant diagonal elements.
+
+    """
     n = len(matrix)
     permutation = np.argsort(np.diag(matrix))[::-1]
     reordered_matrix = matrix[permutation][:, permutation]
@@ -136,6 +178,7 @@ def scalar_multiplication_elementary_matrix(n, row_index, scalar):
 
     return np.array(elementary_matrix)
 
+
 def Determinant(matrix, mul):
     """
     Recursive function for determinant calculation
@@ -186,6 +229,7 @@ def partial_pivoting(A,i,N):
         A = np.dot(e_matrix, A)
         print(f"The matrix after elementary operation :\n {A}")
         print("------------------------------------------------------------------")
+
 def MultiplyMatrix(matrixA, matrixB):
     """
     Function for multiplying 2 matrices
@@ -207,6 +251,7 @@ def MultiplyMatrix(matrixA, matrixB):
 def MakeIMatrix(cols, rows):
     # Initialize a identity matrix
     return [[1 if x == y else 0 for y in range(cols)] for x in range(rows)]
+
 def MulMatrixVector(InversedMat, b_vector):
     """
     Function for multiplying a vector matrix

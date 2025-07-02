@@ -3,6 +3,15 @@ import math
 def max_steps(a, b, err):
     """
     Calculate the maximum number of iterations required to reach the desired accuracy.
+
+    Parameters:
+    a (float): Start of the interval.
+    b (float): End of the interval.
+    err (float): Desired error tolerance.
+    Returns:
+    int: Maximum number of iterations.
+    Raises:
+    ValueError: If the input values are invalid (b <= a or err <= 0).
     """
     if err <= 0 or b <= a:
         raise ValueError("Invalid input: ensure b > a and err > 0.")
@@ -13,6 +22,17 @@ def max_steps(a, b, err):
 def bisection_method(f, a, b, tol=1e-6, verbose=True):
     """
     Perform the bisection method to find the root of a function.
+    Parameters:
+    f (function): The function for which the root is to be found.
+    a (float): Start of the interval.
+    b (float): End of the interval.
+    tol (float): Tolerable error, default is 1e-6.
+    verbose (bool): If True, prints detailed iteration information.
+    Returns:
+    float: The approximate root of the function f within the interval [a, b].
+    Raises:
+    ValueError: If the scalars a and b do not bound a root (f(a) and f(b) must have opposite signs).
+    RuntimeError: If the maximum number of iterations is reached without convergence.
     """
     if f(a) * f(b) >= 0:
         raise ValueError("The scalars a and b do not bound a root. f(a) and f(b) must have opposite signs.")

@@ -58,7 +58,13 @@ def solve_gaussian(A, b):
 
 
 def inverse(A):
-    """Computes the inverse of matrix A using Gauss-Jordan elimination with pivoting"""
+    """Computes the inverse of matrix A using Gauss-Jordan elimination with pivoting
+
+    Parameters:
+    A (list of list of float): Square matrix to be inverted
+    Returns:
+    list of list of float: Inverse of matrix A
+    """
     n = len(A)
     if n == 0 or any(len(row) != n for row in A):
         raise ValueError("Matrix is empty or not square.")
@@ -92,6 +98,19 @@ def inverse(A):
     return I
 
 def condition_number(A):
+    """
+Calculates the condition number of matrix A using infinity norm.
+    The condition number is defined as the product of the infinity norm of A and the infinity norm of its inverse.
+
+    Args:
+        A: list of list of float
+
+    Returns:
+        float: Condition number of the matrix A
+    Raises:
+        ValueError: If the matrix A is not square or is singular (zero on diagonal).
+
+    """
     norm_A = norm(A)
     A_inv = inverse(A)
     norm_A_inv = norm(A_inv)

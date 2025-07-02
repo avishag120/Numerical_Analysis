@@ -1,4 +1,14 @@
 def neville(x_data, y_data, x_interpolate):
+    """
+    Neville's Interpolation Method
+    Args:
+        x_data: List of x-coordinates (must be unique).
+        y_data: List of y-coordinates corresponding to x_data.
+        x_interpolate: The x-coordinate at which to evaluate the interpolation.
+
+    Returns: the interpolated y-value at the given x_interpolate.
+
+    """
     n = len(x_data)
     if n != len(y_data):
         raise ValueError("x_data and y_data must have the same length.")

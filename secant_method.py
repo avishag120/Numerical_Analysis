@@ -7,6 +7,16 @@ def secant_method(func, x0, x1, tol=1e-6, max_iter=100):
     - Handles zero or near-zero denominators
     - Handles invalid function evaluations
     - Adds additional convergence criteria
+
+    Parameters:
+        func (function): The function for which to find the root.
+        x0 (float): First initial guess for the root.
+        x1 (float): Second initial guess for the root.
+        tol (float): Tolerance for convergence, default is 1e-6.
+        max_iter (int): Maximum number of iterations, default is 100.
+
+    Returns:
+        float: The root of the function func, or None if the method did not converge.
     """
     # Print the header for the iteration table
     print(f"{'Iter':<6}{'x0':<15}{'x1':<15}{'f(x1)':<15}{'Δx':<15}")

@@ -67,6 +67,18 @@ def fix(matrix, b):
     return matrix, b
 
 def gauss_seidel(A, b, X0, TOL=0.00001, N=200):
+    """
+    Gauss-Seidel iterative method for solving linear equations Ax = b.
+    Args:
+        A: 2D list (matrix) representing the coefficients of the linear equations.
+        b: 1D list (vector) representing the constants of the linear equations.
+        X0: vector of initial guesses for the solution.
+        TOL: Tolerance for convergence (default is 0.00001).
+        N: Maximum number of iterations (default is 200).
+
+    Returns: A tuple representing the approximate solution to the system of equations.
+
+    """
     n = len(A)
     k = 1
 
@@ -100,6 +112,18 @@ def gauss_seidel(A, b, X0, TOL=0.00001, N=200):
     return (pi, pi, pi)
 
 def jacobi_iterative(A, b, X0, TOL=0.00001, N=200):
+    """
+    Jacobi iterative method for solving linear equations Ax = b.
+    Args:
+        A: 2D list (matrix) representing the coefficients of the linear equations.
+        b: 1D list (vector) representing the constants of the linear equations.
+        X0: vector of initial guesses for the solution.
+        TOL: Tolerance for convergence (default is 0.00001).
+        N: Maximum number of iterations (default is 200).
+
+    Returns: A tuple representing the approximate solution to the system of equations.
+
+    """
     n = len(A)
     k = 1
 

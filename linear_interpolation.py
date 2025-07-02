@@ -1,6 +1,15 @@
 from colors import bcolors
 
 def linearInterpolation(table_points, point):
+    """
+Linear Interpolation/Extrapolation
+    Args:
+        table_points: List of tuples (x, y) representing the table points.
+        point: The x-coordinate at which to evaluate the interpolation/extrapolation.
+
+    Returns: the interpolated or extrapolated y-value at the given point.
+
+    """
     if not table_points or len(table_points) < 2:
         raise ValueError("At least two table points are required for interpolation/extrapolation.")
 

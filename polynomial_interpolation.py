@@ -4,6 +4,19 @@ from GaussAndJacobi import gauss_seidel
 import matplotlib.pyplot as plt
 
 def polynomialInterpolation(table_points, x):
+    """
+    Polynomial Interpolation/Extrapolation
+    This function performs polynomial interpolation/extrapolation using the Vandermonde matrix.
+    It constructs a polynomial that passes through the given points and evaluates it at a specified x-value.
+
+    Args:
+        table_points: List of tuples (x, y) representing the table points.
+        x: The x-coordinate at which to evaluate the polynomial interpolation/extrapolation.
+
+    Returns:
+        The interpolated or extrapolated y-value at the given x.
+
+    """
     matrix = [[point[0] ** i for i in range(len(table_points))] for point in table_points]  # Create the Vandermonde matrix
     b = [point[1] for point in table_points]  # Extract the vector b
 

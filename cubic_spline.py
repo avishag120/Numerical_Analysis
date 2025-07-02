@@ -2,6 +2,22 @@ from colors import bcolors
 from math import pi
 
 def cubicSplineInterpolation(xList, yList, point):
+    """
+Cubic Spline Interpolation
+This function performs cubic spline interpolation to find the value at a given point
+    using the provided xList and yList.
+    Args:
+        xList: List of x-coordinates (must be sorted in ascending order and unique).
+        yList: List of y-coordinates corresponding to xList.
+        point: The x-coordinate at which to evaluate the cubic spline.
+
+    Returns:
+        The interpolated value at the given point.
+    Raises:
+        ValueError: If xList and yList do not have the same length, if xList is not sorted or has duplicates,
+                    or if the point is outside the range of xList
+
+    """
     if len(xList) != len(yList) or len(xList) < 2:
         raise ValueError("xList and yList must have the same length and contain at least two points.")
 
