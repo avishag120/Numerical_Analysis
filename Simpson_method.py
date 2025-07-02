@@ -3,50 +3,42 @@ import matplotlib.pyplot as plt
 import sympy as sp
 from typing import Callable
 
-def simpsons_rule_with_colored_surface(f: Callable[[float], float], f_sym, a: float, b: float, n: int):
-    if n <= 0:
-        raise ValueError("Number of subintervals (n) must be greater than 0.")
+def simpsons_rule_with_colored_surface(func, a, b, n):
+    """
+    Compute the integral of a function using Simpson's rule and visualize the integral surface.
+
+    Parameters:
+        func: The function to integrate.
+        a: The start of the interval.
+        b: The end of the interval.
+        n: Number of subintervals (must be even).
+
+    Returns:
+        Approximate integral of `func` from `a` to `b`.
+    """
     if n % 2 != 0:
-        raise ValueError("Number of subintervals (n) must be even for Simpson's Rule.")
+        raise ValueError("Number of subintervals (n) must be even.")
 
     h = (b - a) / n
+    x = np.linspace(a, b, n + 1)
+    y = func(x)
+
+    # Simpson's rule formula
+    integral = h / 3 * (y[0] + 4 * sum(y[1:n:2]) + 2 * sum(y[2:n-1:2]) + y[-1])
+
+    # Plot the function and shaded area
     x_vals = np.linspace(a, b, 500)
-    y_vals = f(x_vals)
-
-    # Plot the function
+    y_vals = func(x_vals)
     plt.plot(x_vals, y_vals, label="Function", color="blue")
-
-    # Shade the area under the curve
     plt.fill_between(x_vals, y_vals, color="cyan", alpha=0.5, label="Integral Surface")
-
-    # Plot the subinterval points
-    x_points = np.linspace(a, b, n + 1)
-    y_points = f(x_points)
-    plt.scatter(x_points, y_points, color="red", label="Subinterval Points")
-
-    integral = f(a) + f(b)
-    for i in range(1, n):
-        x_i = a + i * h
-        weight = 4 if i % 2 != 0 else 2
-        integral += weight * f(x_i)
-
-    # Calculate the integral and error bound
-    integral_value = integral * h / 3
-    error_bound = error_bound_exact_sympy(f_sym, a, b, n)
-
-    # Annotate the integral value and error bound on the graph
-    plt.text((a + b) / 2, max(y_vals) * 0.8, f"Integral ≈ {integral_value:.6f}", fontsize=12, color="green", ha="center")
-    plt.text((a + b) / 2, max(y_vals) * 0.7, f"Error Bound ≈ {error_bound:.6f}", fontsize=12, color="orange", ha="center")
-
-    plt.title("Simpson's Rule Approximation with Colored Surface")
+    plt.title("Simpson's Rule Approximation")
     plt.xlabel("X-axis")
     plt.ylabel("Y-axis")
     plt.legend()
     plt.grid(True)
     plt.show()
 
-    return integral_value, error_bound
-
+    return integral
 
 def error_bound_exact_sympy(f_sym, a: float, b: float, n: int) -> float:
     """
@@ -84,7 +76,7 @@ if __name__ == '__main__':
 
     print(f"Division into n={n} sections")
     try:
-        result, error = simpsons_rule_with_colored_surface(f, f_sym, a, b, n)
+        result, error = simpsons_rule_with_colored_surface(f, a, b, n), error_bound_exact_sympy(f_sym, a, b, n)
         print(f"Numerical Integration of definite integral in range [{a}, {b}] is {result:.6f}")
         print(f"Estimated error of the approximation: {error:.6f}")
     except Exception as e:

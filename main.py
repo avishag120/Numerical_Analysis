@@ -14,6 +14,7 @@ from cubic_spline import cubicSplineInterpolation
 from machine_precision import calculate_machine_epsilon
 from displaying_graphs import plot_points
 
+import numpy as np
 from math import pi, exp, cos
 
 # ==== Matrix Problems ====
@@ -26,7 +27,7 @@ iter_b = [2, 6, 5]
 x0 = [0.0, 0.0, 0.0]
 
 # ==== Integration ====
-f_simpson = lambda x: exp(x ** 2)
+f_simpson = lambda x: np.exp(x ** 2)
 f_romberg = lambda x: 1 / (2 + x ** 4)
 f_trap = lambda x: x ** 2
 
