@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def polynomial_interpolation(table_points, x):
+def polynomialInterpolation(table_points, x):
     """
     Perform polynomial interpolation using numpy.
 
@@ -49,4 +49,4 @@ if __name__ == '__main__':
     x = 2.5
     print("Table Points:", table_points)
     print(f"Finding an approximation for x = {x}\n")
-    polynomial_interpolation(table_points, x)
+    polynomialInterpolation(table_points, x)
