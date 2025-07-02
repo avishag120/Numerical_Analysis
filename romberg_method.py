@@ -49,7 +49,6 @@ def romberg_integration(func, a, b, n, epsilon=1e-8):
         for j in range(1, i + 1):
             R[i, j] = R[i, j - 1] + (R[i, j - 1] - R[i - 1, j - 1]) / ((4**j) - 1)
 
-        # בדיקת התכנסות מוקדמת
         if i > 0 and abs(R[i, i] - R[i - 1, i - 1]) < epsilon:
             return R[i, i]
 
