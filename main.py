@@ -6,7 +6,7 @@ from newtonRapson import find_roots_in_section
 from Simpson_method import simpsons_rule
 from romberg_method import romberg_integration
 from trapezoidal_refactored import trapezoidal_rule
-from lagrange import lagrange_interpolation
+from lagrange import plot_lagrange_interpolation
 from neville import neville
 from linear_interpolation import linearInterpolation
 from polynomial_interpolation import polynomialInterpolation
@@ -96,7 +96,7 @@ def run():
                 plot_points(x_vals, plt_vals, "Function for Integration")
 
         elif choice == 5:
-            print("Lagrange:", lagrange_interpolation(x_data, y_data, x_val))
+            print("Lagrange:", plot_lagrange_interpolation(x_data, y_data, x_val))
             print("Neville:", neville(x_data, y_data, x_val))
             print("Linear:", linearInterpolation(list(zip(x_data, y_data)), x_val))
             print("Spline:", cubicSplineInterpolation(x_spline, y_spline, x_interp))

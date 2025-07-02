@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
 def has_close_or_duplicate_x(x_data, tolerance=1e-9):
     """
     Checks if there are duplicate or very close x-values in the x_data array.
@@ -46,13 +49,36 @@ def lagrange_interpolation(x_data, y_data, x):
 
     return result
 
+
+
+def plot_lagrange_interpolation(x_data, y_data, x_interpolate):
+    # Generate x values for plotting the polynomial using numpy
+    x_vals = np.linspace(min(x_data) - 1, max(x_data) + 1, 500)
+    y_vals = [lagrange_interpolation(x_data, y_data, x) for x in x_vals]
+
+    # Calculate the interpolated y value once
+    y_interpolate = lagrange_interpolation(x_data, y_data, x_interpolate)
+
+    # Plot the data points
+    plt.scatter(x_data, y_data, color='red', label='Data Points')
+    # Plot the Lagrange polynomial
+    plt.plot(x_vals, y_vals, color='blue', label='Lagrange Polynomial')
+    # Highlight the interpolated point
+    plt.scatter([x_interpolate], [y_interpolate], color='green', label=f'Interpolated Point ({x_interpolate}, {y_interpolate:.4f})')
+
+    plt.title('Lagrange Interpolation')
+    plt.xlabel('X-axis')
+    plt.ylabel('Y-axis')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
 if __name__ == '__main__':
     try:
-        x_data = [1,1, 4]
+        x_data = [1, 2, 4]
         y_data = [1, 0, 1.5]
         x_interpolate = 3  # The x-value where you want to interpolate
-        y_interpolate = lagrange_interpolation(x_data, y_data, x_interpolate)
-        print("\nInterpolated value at x =", x_interpolate, "is y =", y_interpolate)
+        plot_lagrange_interpolation(x_data, y_data, x_interpolate)
     except ValueError as e:
         print(f"An error occurred: {e}")
     except Exception as e:
