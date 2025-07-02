@@ -1,44 +1,38 @@
-from colors import bcolors
-from matrix_utility import *
-from GaussAndJacobi import gauss_seidel
+import numpy as np
 import matplotlib.pyplot as plt
 
-def polynomialInterpolation(table_points, x):
+def polynomial_interpolation(table_points, x):
     """
-    Polynomial Interpolation/Extrapolation
-    This function performs polynomial interpolation/extrapolation using the Vandermonde matrix.
-    It constructs a polynomial that passes through the given points and evaluates it at a specified x-value.
+    Perform polynomial interpolation using numpy.
 
     Args:
-        table_points: List of tuples (x, y) representing the table points.
-        x: The x-coordinate at which to evaluate the polynomial interpolation/extrapolation.
+        table_points (list of tuples): List of (x, y) points.
+        x (float): The x-coordinate to evaluate the polynomial.
 
     Returns:
-        The interpolated or extrapolated y-value at the given x.
-
+        float: The interpolated y-value at x.
     """
-    matrix = [[point[0] ** i for i in range(len(table_points))] for point in table_points]  # Create the Vandermonde matrix
-    b = [point[1] for point in table_points]  # Extract the vector b
+    # Extract x and y values from the table points
+    xs = np.array([pt[0] for pt in table_points])
+    ys = np.array([pt[1] for pt in table_points])
 
-    print(bcolors.OKBLUE, "The matrix obtained from the points: ", bcolors.ENDC, '\n', np.array(matrix))
-    print(bcolors.OKBLUE, "\nb vector: ", bcolors.ENDC, '\n', np.array(b))
+    # Fit a polynomial of degree len(xs) - 1
+    coeffs = np.polyfit(xs, ys, deg=len(xs) - 1)
+    polynomial = np.poly1d(coeffs)
 
-    # Solve the system using Gauss-Seidel
-    matrixSol = gauss_seidel(matrix, b, X0=[0.0] * len(b))
+    # Evaluate the polynomial at the given x
+    result = polynomial(x)
 
-    print(f"matrixSol: {matrixSol}, type: {type(matrixSol)}")
-    result = sum([matrixSol[i] * (x ** i) for i in range(len(matrixSol))])  # Compute the polynomial value
+    # Print the polynomial and result
+    print("\nThe polynomial:")
+    print(polynomial)
+    print(f"\nP({x}) = {result:.6f}")
 
-    print(bcolors.OKBLUE, "\nThe polynom:", bcolors.ENDC)
-    print('P(X) = ' + ' + '.join([f'({matrixSol[i]}) * x^{i}' for i in range(len(matrixSol))]))
-    print(bcolors.OKGREEN, f"\nThe Result of P(X={x}) is:", bcolors.ENDC)
-    print(result)
+    # Plot the polynomial and data points
+    x_vals = np.linspace(xs.min() - 1, xs.max() + 1, 500)
+    y_vals = polynomial(x_vals)
 
-    # Plotting the graph
-    x_vals = np.linspace(min([p[0] for p in table_points]) - 1, max([p[0] for p in table_points]) + 1, 500)
-    y_vals = [sum([matrixSol[i] * (xi ** i) for i in range(len(matrixSol))]) for xi in x_vals]
-
-    plt.scatter([p[0] for p in table_points], [p[1] for p in table_points], color='red', label='Data Points')
+    plt.scatter(xs, ys, color='red', label='Data Points')
     plt.plot(x_vals, y_vals, label='Interpolated Polynomial', color='blue')
     plt.axvline(x=x, color='green', linestyle='--', label=f'X={x}')
     plt.title('Polynomial Interpolation')
@@ -47,15 +41,12 @@ def polynomialInterpolation(table_points, x):
     plt.legend()
     plt.grid()
     plt.show()
+
     return result
 
-
 if __name__ == '__main__':
-
     table_points = [(1, 0.8415), (2, 0.9093), (3, 0.1411)]
     x = 2.5
-    print(bcolors.OKBLUE, "----------------- Interpolation & Extrapolation Methods -----------------\n", bcolors.ENDC)
-    print(bcolors.OKBLUE, "Table Points: ", bcolors.ENDC, table_points)
-    print(bcolors.OKBLUE, "Finding an approximation to the point: ", bcolors.ENDC, x,'\n')
-    polynomialInterpolation(table_points, x)
-    print(bcolors.OKBLUE, "\n-------------------------------------")
+    print("Table Points:", table_points)
+    print(f"Finding an approximation for x = {x}\n")
+    polynomial_interpolation(table_points, x)
