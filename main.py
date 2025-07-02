@@ -99,30 +99,9 @@ def run():
             print("Lagrange:", lagrange_interpolation(x_data, y_data, x_val))
             print("Neville:", neville(x_data, y_data, x_val))
             print("Linear:", linearInterpolation(list(zip(x_data, y_data)), x_val))
-
-            show_plot = input("Would you like to display the plot for Polynomial Interpolation? (y/n): ").lower() == 'y'
-            print("Polynomial:", polynomialInterpolation(list(zip(x_data, y_data)), x_val))
-            if show_plot:
-                x_vals = generate_linspace(min(x_data), max(x_data), 100)
-                coeffs = [0, 0, 0]
-                n = len(x_data)
-                for i in range(n):
-                    term = y_data[i]
-                    for j in range(n):
-                        if i != j:
-                            term *= (x_val - x_data[j]) / (x_data[i] - x_data[j])
-                    coeffs[i] = term
-                y_vals = [sum(coeffs)] * len(x_vals)
-                plot_points(x_vals, y_vals, "Polynomial Interpolation")
-
             print("Spline:", cubicSplineInterpolation(x_spline, y_spline, x_interp))
-
-            show_spline = input("Would you like to display the plot for Spline Interpolation? (y/n): ").lower() == 'y'
-            if show_spline:
-                x_vals = generate_linspace(min(x_spline), max(x_spline), 200)
-                y_vals = [cubicSplineInterpolation(x_spline, y_spline, x) for x in x_vals]
-                plot_points(x_vals, y_vals, "Cubic Spline Interpolation")
-
+            print("Polynomial: \u2B07", )
+            polynomialInterpolation(list(zip(x_data, y_data)), x_val)
         elif choice == 6:
             print("Bisection:")
             try:
