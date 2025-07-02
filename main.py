@@ -3,11 +3,11 @@ from GaussAndJacobi import gauss_seidel, jacobi_iterative
 from bisection_method import bisection_method
 from secant_method import secant_method
 from newtonRapson import find_roots_in_section
-from Simpson_method import simpsons_rule
-from romberg_method import romberg_integration
-from trapezoidal_refactored import trapezoidal_rule
+from Simpson_method import simpsons_rule_with_colored_surface
+from romberg_method import romberg_integration_with_plot
+from trapezoidal_refactored import trapezoidal_rule_with_plot
 from lagrange import plot_lagrange_interpolation
-from neville import neville
+from neville import neville_with_plot
 from linear_interpolation import linearInterpolation
 from polynomial_interpolation import polynomialInterpolation
 from cubic_spline import cubicSplineInterpolation
@@ -85,9 +85,9 @@ def run():
                 print("Invalid method choice.")
 
         elif choice == 4:
-            print("Simpson:", simpsons_rule(f_simpson, a_int, b_int, n_int))
-            print("Romberg:", romberg_integration(f_romberg, 0, 1, 5))
-            print("Trapezoidal:", trapezoidal_rule(f_trap, 0, 1, 100))
+            print("Simpson:", simpsons_rule_with_colored_surface(f_simpson, a_int, b_int, n_int))
+            print("Romberg:", romberg_integration_with_plot(f_romberg, 0, 1, 5))
+            print("Trapezoidal:", trapezoidal_rule_with_plot(f_trap, 0, 1, 100))
 
             show_plot = input("Would you like to display the plot for the integration methods? (y/n): ").lower() == 'y'
             if show_plot:
@@ -97,7 +97,7 @@ def run():
 
         elif choice == 5:
             print("Lagrange:", plot_lagrange_interpolation(x_data, y_data, x_val))
-            print("Neville:", neville(x_data, y_data, x_val))
+            print("Neville:", neville_with_plot(x_data, y_data, x_val))
             print("Linear:", linearInterpolation(list(zip(x_data, y_data)), x_val))
             print("Spline:", cubicSplineInterpolation(x_spline, y_spline, x_interp))
             print("Polynomial: \u2B07", )

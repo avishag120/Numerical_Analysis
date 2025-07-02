@@ -1,13 +1,14 @@
-def neville(x_data, y_data, x_interpolate):
+import matplotlib.pyplot as plt
+
+def neville_with_plot(x_data, y_data, x_interpolate):
     """
-    Neville's Interpolation Method
+    Neville's Interpolation Method with visualization.
     Args:
         x_data: List of x-coordinates (must be unique).
         y_data: List of y-coordinates corresponding to x_data.
         x_interpolate: The x-coordinate at which to evaluate the interpolation.
 
     Returns: the interpolated y-value at the given x_interpolate.
-
     """
     n = len(x_data)
     if n != len(y_data):
@@ -30,15 +31,31 @@ def neville(x_data, y_data, x_interpolate):
             tableau[i][j] = ((x_interpolate - x_data[i + j]) * tableau[i][j - 1] -
                              (x_interpolate - x_data[i]) * tableau[i + 1][j - 1]) / (x_data[i] - x_data[i + j])
 
-    return tableau[0][n - 1]
+    interpolated_value = tableau[0][n - 1]
+
+    # Plot the data points
+    plt.scatter(x_data, y_data, color="red", label="Data Points")
+    plt.plot(x_data, y_data, color="blue", linestyle="--", label="Interpolation Line")
+
+    # Highlight the interpolated point
+    plt.scatter([x_interpolate], [interpolated_value], color="green", label=f"Interpolated Point ({x_interpolate}, {interpolated_value:.2f})")
+
+    plt.title("Neville's Interpolation")
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    return interpolated_value
 
 if __name__ == '__main__':
     # Example usage:
-    x_data = [2,4,6]
-    y_data = [5,6,8]
+    x_data = [2, 4, 6]
+    y_data = [5, 6, 8]
     x_interpolate = 4.5
     try:
-        interpolated_value = neville(x_data, y_data, x_interpolate)
+        interpolated_value = neville_with_plot(x_data, y_data, x_interpolate)
         print(f"\nInterpolated value at x = {x_interpolate} is y = {interpolated_value}")
     except ValueError as e:
         print(f"Error: {e}")

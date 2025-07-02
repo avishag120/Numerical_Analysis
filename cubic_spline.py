@@ -1,39 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
 from colors import bcolors
 from math import pi
 
 def cubicSplineInterpolation(xList, yList, point):
     """
-Cubic Spline Interpolation
-This function performs cubic spline interpolation to find the value at a given point
+    Cubic Spline Interpolation
+    This function performs cubic spline interpolation to find the value at a given point
     using the provided xList and yList.
-    Args:
-        xList: List of x-coordinates (must be sorted in ascending order and unique).
-        yList: List of y-coordinates corresponding to xList.
-        point: The x-coordinate at which to evaluate the cubic spline.
-
-    Returns:
-        The interpolated value at the given point.
-    Raises:
-        ValueError: If xList and yList do not have the same length, if xList is not sorted or has duplicates,
-                    or if the point is outside the range of xList
-
     """
     if len(xList) != len(yList) or len(xList) < 2:
         raise ValueError("xList and yList must have the same length and contain at least two points.")
 
-    # Ensure xList is sorted and unique
     if sorted(xList) != xList or len(set(xList)) != len(xList):
         raise ValueError("xList must be sorted in ascending order with unique values.")
 
-    n = len(xList) - 1  # Number of intervals
-    h = [xList[i + 1] - xList[i] for i in range(n)]  # Step sizes
+    n = len(xList) - 1
+    h = [xList[i + 1] - xList[i] for i in range(n)]
 
-    # Step 1: Build the tridiagonal system
     alpha = [0] * (n - 1)
     for i in range(1, n):
         alpha[i - 1] = (3 / h[i] * (yList[i + 1] - yList[i]) - 3 / h[i - 1] * (yList[i] - yList[i - 1]))
 
-    # Tridiagonal matrix coefficients
     l = [1] + [0] * n
     mu = [0] * n
     z = [0] * (n + 1)
@@ -46,7 +34,6 @@ This function performs cubic spline interpolation to find the value at a given p
     l[n] = 1
     z[n] = 0
 
-    # Step 2: Solve for c, b, and d coefficients
     c = [0] * (n + 1)
     b = [0] * n
     d = [0] * n
@@ -56,16 +43,41 @@ This function performs cubic spline interpolation to find the value at a given p
         b[j] = (yList[j + 1] - yList[j]) / h[j] - h[j] * (c[j + 1] + 2 * c[j]) / 3
         d[j] = (c[j + 1] - c[j]) / (3 * h[j])
 
-    # Step 3: Find the interval [x_i, x_{i+1}] containing the point
     for i in range(n):
         if xList[i] <= point < xList[i + 1] or (i == n - 1 and point == xList[-1]):
-            # Step 4: Evaluate the cubic spline at the point
             dx = point - xList[i]
             result = yList[i] + b[i] * dx + c[i] * dx ** 2 + d[i] * dx ** 3
-            return result
+            break
+    else:
+        raise ValueError(f"Point {point} is out of interpolation range [{xList[0]}, {xList[-1]}].")
 
-    raise ValueError(f"Point {point} is out of interpolation range [{xList[0]}, {xList[-1]}].")
+    # Plot the data points
+    plt.scatter(xList, yList, color="red", label="Data Points")
 
+    # Generate the spline curve
+    x_vals = np.linspace(xList[0], xList[-1], 500)
+    y_vals = []
+    for x in x_vals:
+        for i in range(n):
+            if xList[i] <= x < xList[i + 1] or (i == n - 1 and x == xList[-1]):
+                dx = x - xList[i]
+                y = yList[i] + b[i] * dx + c[i] * dx ** 2 + d[i] * dx ** 3
+                y_vals.append(y)
+                break
+
+    plt.plot(x_vals, y_vals, color="blue", label="Cubic Spline Curve")
+
+    # Highlight the interpolated point
+    plt.scatter([point], [result], color="green", label=f"Interpolated Point ({point:.2f}, {result:.2f})")
+
+    plt.title("Cubic Spline Interpolation")
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    return result
 
 if __name__ == '__main__':
     xList = [0, pi/6, pi/4, pi/3, pi/2]
@@ -75,5 +87,6 @@ if __name__ == '__main__':
     print(bcolors.OKBLUE, "xList: ", bcolors.ENDC, xList)
     print(bcolors.OKBLUE, "yList: ", bcolors.ENDC, yList)
     print(bcolors.OKBLUE, "Finding an approximation to the point: ", bcolors.ENDC, point)
-    cubicSplineInterpolation(xList, yList, point)
+    result = cubicSplineInterpolation(xList, yList, point)
+    print(result)
     print(bcolors.OKBLUE, "\n---------------------------------------------------------------\n", bcolors.ENDC)

@@ -1,11 +1,12 @@
 import numpy as np
 from colors import bcolors
+import matplotlib.pyplot as plt
 import math
 
 
-def romberg_integration(func, a, b, n, epsilon=1e-8):
+def romberg_integration_with_plot(func, a, b, n, epsilon=1e-8):
     """
-    Romberg Integration with error checks and convergence test.
+    Romberg Integration with visualization of the integral surface.
 
     Parameters:
     func (function): Function to integrate.
@@ -50,9 +51,28 @@ def romberg_integration(func, a, b, n, epsilon=1e-8):
             R[i, j] = R[i, j - 1] + (R[i, j - 1] - R[i - 1, j - 1]) / ((4**j) - 1)
 
         if i > 0 and abs(R[i, i] - R[i - 1, i - 1]) < epsilon:
-            return R[i, i]
+            integral_value = R[i, i]
+            break
+    else:
+        integral_value = R[n - 1, n - 1]
 
-    return R[n - 1, n - 1]
+    # Plot the function and integral surface
+    x_vals = np.linspace(a, b, 500)
+    y_vals = func(x_vals)
+
+    plt.plot(x_vals, y_vals, label="Function", color="blue")
+    plt.fill_between(x_vals, y_vals, color="cyan", alpha=0.5, label="Integral Surface")
+    plt.title("Romberg Integration with Integral Surface")
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
+    plt.legend()
+    plt.grid(True)
+
+    # Annotate the integral value
+    plt.text((a + b) / 2, max(y_vals) * 0.8, f"Integral ≈ {integral_value:.6f}", fontsize=12, color="green", ha="center")
+    plt.show()
+
+    return integral_value
 
 def f(x):
     return 1/(2+x ** 4)
@@ -63,7 +83,7 @@ if __name__ == '__main__':
     a = 0
     b = 1
     n = 5
-    integral = romberg_integration(f, a, b, n)
+    integral = romberg_integration_with_plot(f, a, b, n)
 
     print( f" Division into n={n} sections ")
     print(bcolors.OKBLUE, f"Approximate integral in range [{a},{b}] is {integral}", bcolors.ENDC)
