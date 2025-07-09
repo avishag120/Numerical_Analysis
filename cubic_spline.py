@@ -8,6 +8,17 @@ def cubicSplineInterpolation(xList, yList, point):
     Cubic Spline Interpolation
     This function performs cubic spline interpolation to find the value at a given point
     using the provided xList and yList.
+    Args:
+        xList (list of float): Sorted list of x-values (must be unique and in ascending order).
+        yList (list of float): Corresponding y-values for the xList.
+        point (float): The x-value to interpolate.
+
+    Returns:
+        float: The interpolated y-value at the specified point.
+
+    Raises:
+        ValueError: If xList and yList are of mismatched length, contain less than two points,
+                    are not sorted in ascending order, or if the interpolation point is out of range.
     """
     if len(xList) != len(yList) or len(xList) < 2:
         raise ValueError("xList and yList must have the same length and contain at least two points.")
@@ -80,6 +91,11 @@ def cubicSplineInterpolation(xList, yList, point):
     return result
 
 if __name__ == '__main__':
+    """
+    Demonstration of cubic spline interpolation using sin(x) over the interval [0, π/2].
+    Displays the spline curve, the data points, and highlights the interpolated value.
+    """
+
     xList = [0, pi/6, pi/4, pi/3, pi/2]
     yList = [0, 0.5, 0.7071, 0.8660, 1.0]  # Corresponding y values for sin(x)
     point = pi/3
