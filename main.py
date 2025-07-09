@@ -52,6 +52,11 @@ def generate_linspace(start, end, num_points):
     return [start + i * step for i in range(num_points)]
 
 def run():
+    """
+        Displays a menu for selecting and executing various numerical analysis methods.
+        Allows the user to choose between solving linear systems, iterative methods,
+        integration, interpolation, root finding, and machine precision calculations.
+        """
     while True:
         print("\n=== Numerical Analysis Main Menu ===")
         print("1. Solve Ax = b using Gaussian Elimination")
@@ -90,6 +95,7 @@ def run():
             print("Romberg:", romberg_integration_with_plot(f_romberg, 0, 1, 5))
             print("Trapezoidal:", trapezoidal_rule_with_plot(f_trap, 0, 1, 100))
 
+            # User interaction for enabling/disabling plots
             show_plot = input("Would you like to display the plot for the integration methods? (y/n): ").lower() == 'y'
             if show_plot:
                 x_vals = generate_linspace(a_int, b_int, 100)
