@@ -18,8 +18,7 @@ def print_matrix(matrix):
 
 def MaxNorm(matrix):
     """
-    Function for calculating the max-norm of a matrix
-    :param matrix: Matrix nxn
+    Function for calculating the max-norm of a matrix    :param matrix:  nxn
     :return:max-norm of a matrix
     """
     max_norm = 0
@@ -233,8 +232,7 @@ def partial_pivoting(A,i,N):
 def MultiplyMatrix(matrixA, matrixB):
     """
     Function for multiplying 2 matrices
-    :param matrixA: Matrix nxn
-    :param matrixB: Matrix nxn
+    :param matrixA: Matrix nxn    :param matrixB: 
     :return: Multiplication between 2 matrices
     """
     # result matrix initialized as singularity matrix
@@ -303,8 +301,7 @@ def Cond(matrix, invert):
 
 def InverseMatrix(matrix,vector):
     """
-    Function for calculating an inverse matrix
-    :param matrix:  Matrix nxn
+    Function for calculating an inverse matrix    :param matrix:   nxn
     :return: Inverse matrix
     """
     # Unveri reversible matrix
@@ -352,16 +349,16 @@ def RowXchange(matrix, vector):
     """
 
     for i in range(len(matrix)):
-        max = abs(matrix[i][i])
+        pivot_max = abs(matrix[i][i])
         for j in range(i, len(matrix)):
             # The pivot member is the maximum in each column
-            if abs(matrix[j][i]) > max:
+            if abs(matrix[j][i]) > pivot_max:
                 temp = matrix[j]
                 temp_b = vector[j]
                 matrix[j] = matrix[i]
                 vector[j] = vector[i]
                 matrix[i] = temp
                 vector[i] = temp_b
-                max = abs(matrix[i][i])
+                pivot_max = abs(matrix[i][i])
 
     return [matrix, vector]
