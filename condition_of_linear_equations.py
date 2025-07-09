@@ -61,9 +61,9 @@ def inverse(A):
     """Computes the inverse of matrix A using Gauss-Jordan elimination with pivoting
 
     Parameters:
-    A (list of list of float): Square matrix to be inverted
+    A (list of float lists ): Square matrix to be inverted
     Returns:
-    list of list of float: Inverse of matrix A
+    list of float lists  : Inverse of matrix A
     """
     n = len(A)
     if n == 0 or any(len(row) != n for row in A):
@@ -103,7 +103,8 @@ Calculates the condition number of matrix A using infinity norm.
     The condition number is defined as the product of the infinity norm of A and the infinity norm of its inverse.
 
     Args:
-        A: list of list of float
+        A (list of float lists)
+
 
     Returns:
         float: Condition number of the matrix A
@@ -137,6 +138,11 @@ Calculates the condition number of matrix A using infinity norm.
 
 
 if __name__ == '__main__':
+    """
+    Demonstration of solving a linear system Ax = b using Gaussian elimination,
+    and computing the condition number of matrix A to assess sensitivity.
+    """
+
     A = [
         [0.913, 0.659],
         [0.457, 0.330],
