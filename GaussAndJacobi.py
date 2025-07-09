@@ -186,6 +186,19 @@ def custom_swap_rows(matrix, row1, row2):
 
 
 if __name__ == '__main__':
+    """
+    Main execution for solving a linear system using Gauss-Seidel or Jacobi iterative methods.
+
+    This script:
+    - Initializes a system Ax = b
+    - Checks whether the matrix is diagonally dominant
+    - Attempts to fix it if it's not
+    - Prompts user to choose a solving method
+    - Handles errors like zero division and non-convergence
+    - Improves matrix validation and warns if the matrix cannot be made diagonally dominant
+
+    Displays step-by-step iteration and prints the final approximate solution.
+    """
 
     matrixA = custom_array( [[4,2,0],[2,10,4],[0,4,5]])
     vectorB = custom_array([2, 6, 5])
@@ -194,8 +207,11 @@ if __name__ == '__main__':
     if not is_diagonally_dominant(matrixA):
         try:
             matrixA, vectorB = fix(matrixA, vectorB)
-        except ValueError as e:
-            print('the matrix is not diagonally dominant, moving to try')
+            if not is_diagonally_dominant(matrixA):
+                print("Matrix could not be made diagonally dominant. Results may be inaccurate.")
+        except ValueError :
+            print("Matrix is not diagonally dominant and cannot be fixed. Exiting.")
+            exit()
 
     solution = ()
     x = int(input('Enter 1 for Gauss Seidel or 2 for Jacobi: '))
